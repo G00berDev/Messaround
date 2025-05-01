@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Portfolio Cube</title>
+    <style>
+        :root {
+            --primary-color: #8b4513;
+            --secondary-color: #00ffcc;
+            --bg-color: #0a0a1a;
+            --panel-color: #2d1b0e;
+            --text-color: #c0a080;
+            --battery-high: #00ffcc;
+            --battery-medium: #ffcc00;
+            --battery-low: #ff5555;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            cursor: default;
+            color: var(--text-color);
+        }
+
+        /* Background elements */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .grid-lines {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                linear-gradient(90deg, rgba(0, 100, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 100, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: moveGrid 20s linear infinite;
+            opacity: 0.5;
+            transition: all 0.5s ease;
+        }
+
+        .circuit-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 200, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 200, 0.05) 0%, transparent 20%);
+            animation: pulse 8s ease-in-out infinite alternate;
+        }
+
+        .scanlines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 95%,
+                rgba(0, 255, 200, 0.03) 95%
+            );
+            background-size: 100% 5px;
+            animation: scanline 5s linear infinite;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(0, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        /* Main container */
+        .portfolio-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Cube scene */
+        .scene {
+            perspective: 1000px;
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            transition: all 0.5s ease;
+            z-index: 10;
+        }
+
+        .scene.minimized {
+            width: 100px;
+            height: 100px;
+            top: 20px;
+            left: 20px;
+            transform: none;
+        }
+
+        /* Portfolio content panel */
+        .portfolio-panel {
+            position: absolute;
+            width: 0;
+            height: 0;
+            background-color: rgba(45, 27, 14, 0.95);
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 0 50px rgba(139, 69, 19, 0.8);
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 5;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .portfolio-panel.active {
+            width: 80vw;
+            height: 80vh;
+            opacity: 1;
+            overflow-y: auto;
+        }
+
+        .panel-content {
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.2s;
+        }
+
+        .portfolio-panel.active .panel-content {
+            opacity: 1;
+        }
+
+        /* Cube styles */
+        .pixel-box {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+            transform: rotateX(15deg) rotateY(15deg);
+            transition: all 0.5s ease;
+            image-rendering: pixelated;
+        }
+
+        .pixel-box.minimized {
+            width: 80px;
+            height: 80px;
+            animation: none;
+            transform: rotateX(15deg) rotateY(15deg);
+        }
+
+        .pixel-box-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid var(--primary-color);
+            background-color: var(--panel-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            font-size: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .pixel-box-face:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        }
+
+        .pixel-box-face.minimized {
+            font-size: 12px;
+        }
+
+        /* Cube face positions */
+        .pixel-box-face-front {
+            transform: translateZ(100px);
+            background-color: rgba(45, 27, 14, 0.9);
+        }
+
+        .pixel-box-face-back {
+            transform: rotateY(180deg) translateZ(100px);
+            background-color: rgba(45, 27, 14, 0.9);
+        }
+
+        .pixel-box-face-right {
+            transform: rotateY(90deg) translateZ(100px);
+            background-color: rgba(45, 27, 14, 0.9);
+        }
+
+        .pixel-box-face-left {
+            transform: rotateY(-90deg) translateZ(100px);
+            background-color: rgba(45, 27, 14, 0.9);
+        }
+
+        .pixel-box-face-top {
+            transform: rotateX(90deg) translateZ(100px);
+            background-color: rgba(45, 27, 14, 0.9);
+        }
+
+        .pixel-box-face-bottom {
+            transform: rotateX(-90deg) translateZ(100px);
+            background-color: rgba(45, 27, 14, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Content styles */
+        h2 {
+            color: var(--secondary-color);
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            text-shadow: 0 0 5px var(--secondary-color);
+        }
+
+        .skill {
+            display: inline-block;
+            background: rgba(0, 200, 255, 0.1);
+            padding: 5px 10px;
+            margin: 5px;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .project {
+            background: rgba(139, 69, 19, 0.1);
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .project:hover {
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        /* Close button */
+        .close-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-panel.active .close-panel {
+            opacity: 1;
+        }
+
+        /* Control panel */
+        .control-panel {
+            position: absolute;
+            bottom: 20px;
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 15;
+        }
+
+        .control-button {
+            background: rgba(20, 40, 60, 0.7);
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            background: rgba(0, 200, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+        }
+
+        /* Status bar elements */
+        .status-bar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 20;
+        }
+
+        .status-item {
+            background: rgba(20, 40, 60, 0.7);
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .status-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 204, 0.1),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .status-item:hover {
+            background: rgba(0, 200, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+        }
+
+        .status-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .battery-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .battery-level {
+            width: 30px;
+            height: 15px;
+            border: 1px solid currentColor;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .battery-fill {
+            height: 100%;
+            background: currentColor;
+            width: 100%;
+            transition: width 0.5s ease, background-color 0.5s ease;
+        }
+
+        .battery-tip {
+            width: 3px;
+            height: 7px;
+            background: currentColor;
+        }
+
+        .charging-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            display: none;
+        }
+
+        /* Tooltip styles */
+        .status-tooltip {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: rgba(20, 40, 60, 0.9);
+            border: 1px solid var(--secondary-color);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .status-item:hover .status-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FPS Meter */
+        .fps-meter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(20, 40, 60, 0.7);
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            z-index: 20;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Dice Minigame Panel */
+        .minigame-title {
+            font-size: 2em;
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .fps-challenge {
+            font-size: 0.8em;
+            color: var(--text-color);
+            text-align: center;
+            max-width: 80%;
+        }
+
+        /* Dice controls */
+        .dice-controls {
+            background: rgba(20, 40, 60, 0.3);
+            border: 1px solid var(--secondary-color);
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dice-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Dice container */
+        .dice-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5; /* Lower than cube but above background */
+            perspective: 1000px;
+        }
+
+        /* 3D Dice styles */
+        .die {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            transform-style: preserve-3d;
+            transition: transform 2s ease-out;
+        }
+
+        .dice-total {
+            position: fixed;
+            right: 20px;
+            bottom: 50%;
+            transform: translateY(50%);
+            font-size: 5rem;
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.7);
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .dice-total.show {
+            opacity: 1;
+        }
+
+        /* Common face styles */
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #333;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* D6 styles (cube) */
+        .d6 .front  { transform: rotateY(0deg) translateZ(25px); }
+        .d6 .back   { transform: rotateY(180deg) translateZ(25px); }
+        .d6 .right  { transform: rotateY(90deg) translateZ(25px); }
+        .d6 .left   { transform: rotateY(-90deg) translateZ(25px); }
+        .d6 .top    { transform: rotateX(90deg) translateZ(25px); }
+        .d6 .bottom { transform: rotateX(-90deg) translateZ(25px); }
+
+        /* Dice animations */
+        @keyframes roll {
+            0% { 
+                transform: translate(0, 0) rotateX(0) rotateY(0) rotateZ(0); 
+            }
+            100% { 
+                transform: translate(var(--end-x), var(--end-y)) 
+                          rotateX(var(--end-rot-x)) 
+                          rotateY(var(--end-rot-y)) 
+                          rotateZ(var(--end-rot-z)); 
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: rotateX(15deg) rotateY(15deg) translateY(0);
+            }
+            50% {
+                transform: rotateX(20deg) rotateY(25deg) translateY(-20px);
+            }
+        }
+
+        @keyframes moveGrid {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(-50px, -50px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes scanline {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 100%;
+            }
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .portfolio-panel.active {
+                width: 95vw;
+                height: 85vh;
+            }
+            
+            .scene.minimized {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .pixel-box.minimized {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            
+            .status-item {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .dice-total {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="grid-lines"></div>
+        <div class="circuit-pattern"></div>
+        <div class="scanlines"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <div class="portfolio-container">
+        <!-- Portfolio panels -->
+        <div class="portfolio-panel" id="about-panel">
+            <button class="close-panel" onclick="closePanel()">✕</button>
+            <div class="panel-content">
+                <h2>ABOUT ME</h2>
+                <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 30px;">
+                    <div style="width: 150px; height: 150px; border: 3px solid var(--primary-color); display: flex; align-items: center; justify-content: center;">
+                        <img src="491027066_1070859944879164_4729344521405869009_n.jpg" alt="Your Photo" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                    </div>                    
+                    <div>
+                        <h3 style="color: var(--secondary-color); margin-top: 0;">Stryder Bateman</h3>
+                        <p>Interactive Developer | UI/UX Designer | Creative Technologist</p>
+                        <p>Specializing in creating immersive digital experiences that blend art and technology.</p>
+                    </div>
+                </div>
+                <div>
+                    <h3>SKILLS</h3>
+                    <div>
+                        <span class="skill">HTML5/CSS3</span>
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">React</span>
+                        <span class="skill">Three.js</span>
+                        <span class="skill">UI/UX Design</span>
+                        <span class="skill">Creative Coding</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-panel" id="projects-panel">
+            <button class="close-panel" onclick="closePanel()">✕</button>
+            <div class="panel-content">
+                <h2>PROJECTS</h2>
+                <div class="project">
+                    <h3>Interactive 3D Portfolio</h3>
+                    <p>A unique portfolio experience using 3D CSS transforms and interactive elements.</p>
+                    <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
+                </div>
+                <div class="project">
+                    <h3>Medieval Fantasy Game</h3>
+                    <p>An RPG with pixel art aesthetics and procedurally generated worlds.</p>
+                    <p><strong>Technologies:</strong> Unity, C#</p>
+                </div>
+                <div class="project">
+                    <h3>Augmented Reality App</h3>
+                    <p>AR experience that brings historical artifacts to life.</p>
+                    <p><strong>Technologies:</strong> ARKit, Swift</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-panel" id="experience-panel">
+            <button class="close-panel" onclick="closePanel()">✕</button>
+            <div class="panel-content">
+                <h2>EXPERIENCE</h2>
+                <div class="project">
+                    <h3>Lead Developer | Digital Forge</h3>
+                    <p><em>2020 - Present</em></p>
+                    <p>Leading a team of developers creating immersive web experiences.</p>
+                    <ul>
+                        <li>Developed award-winning interactive applications</li>
+                        <li>Implemented innovative UI solutions</li>
+                        <li>Mentored junior developers</li>
+                    </ul>
+                </div>
+                <div class="project">
+                    <h3>UI Designer | Pixel Arts</h3>
+                    <p><em>2017 - 2020</em></p>
+                    <p>Created user interfaces for games and interactive media.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-panel" id="contact-panel">
+            <button class="close-panel" onclick="closePanel()">✕</button>
+            <div class="panel-content">
+                <h2>CONTACT</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3>Get in Touch</h3>
+                        <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
+                        <p>Phone: +1 (555) 123-4567</p>
+                        <p>Location: Digital Realm</p>
+                    </div>
+                    <div>
+                        <h3>Connect</h3>
+                        <p><a href="#">LinkedIn</a></p>
+                        <p><a href="#">GitHub</a></p>
+                        <p><a href="#">Twitter</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cube -->
+        <div class="scene" id="scene">
+            <div class="pixel-box" id="cube">
+                <div class="pixel-box-face pixel-box-face-front" onclick="showPanel('about', this)">
+                    ABOUT
+                </div>
+                <div class="pixel-box-face pixel-box-face-back" onclick="showPanel('projects', this)">
+                    PROJECTS
+                </div>
+                <div class="pixel-box-face pixel-box-face-right" onclick="showPanel('experience', this)">
+                    EXPERIENCE
+                </div>
+                <div class="pixel-box-face pixel-box-face-left" onclick="showPanel('contact', this)">
+                    CONTACT
+                </div>
+                <div class="pixel-box-face pixel-box-face-top" onclick="showPanel('skills', this)">
+                    SKILLS
+                </div>
+                <div class="pixel-box-face pixel-box-face-bottom">
+                    <div class="minigame-title">;)</div>
+                    <div class="dice-controls">
+                        <div class="dice-selector">
+                            <select id="dice-type">
+                                <option value="4">d4</option>
+                                <option value="6" selected>d6</option>
+                                <option value="8">d8</option>
+                                <option value="10">d10</option>
+                                <option value="12">d12</option>
+                                <option value="20">d20</option>
+                                <option value="100">d100</option>
+                            </select>
+                            <input type="number" id="dice-count" min="1" max="100" value="10">
+                        </div>
+                        <button class="dice-roll-btn" id="roll-dice">Roll Dice</button>
+                    </div>
+                    <div class="fps-challenge">How low can your FPS go?</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-panel">
+        <button class="control-button" onclick="rotateCube('x')">Rotate X</button>
+        <button class="control-button" onclick="rotateCube('y')">Rotate Y</button>
+        <button class="control-button" onclick="toggleFloat()">Toggle Float</button>
+    </div>
+
+    <div class="fps-meter" id="fps-meter">FPS: --</div>
+    <div class="status-bar">
+        <div class="status-item" id="clock">
+            <span id="time-display">00:00:00</span>
+            <div class="status-tooltip">System Time</div>
+        </div>
+        <div class="status-item" id="battery">
+            <div class="battery-container">
+                <div class="battery-level">
+                    <div class="battery-fill" id="battery-fill"></div>
+                    <span class="charging-icon" id="charging-icon">⚡</span>
+                </div>
+                <div class="battery-tip"></div>
+                <span id="battery-percent">--%</span>
+            </div>
+            <div class="status-tooltip">Battery Status</div>
+        </div>
+    </div>
+
+    <div class="dice-total" id="dice-total"></div>
+    <div class="dice-container" id="dice-container"></div>
+
+    <script>
+        // Cube rotation variables
+let rotationX = 15;
+let rotationY = 15;
+let isFloating = true;
+const cube = document.getElementById('cube');
+const scene = document.getElementById('scene');
+
+// Panel management
+const panels = {
+    'about': document.getElementById('about-panel'),
+    'projects': document.getElementById('projects-panel'),
+    'experience': document.getElementById('experience-panel'),
+    'contact': document.getElementById('contact-panel'),
+    'skills': document.getElementById('skills-panel')
+};
+
+let activePanel = null;
+let isMinimized = false;
+
+function showPanel(panelId, faceElement) {
+    if (isMinimized) {
+        closePanel();
+        return;
+    }
+    
+    // Minimize the cube
+    isMinimized = true;
+    scene.classList.add('minimized');
+    cube.classList.add('minimized');
+    
+    // Apply minimized class to all faces
+    const faces = document.querySelectorAll('.pixel-box-face');
+    faces.forEach(face => face.classList.add('minimized'));
+    
+    // Show the selected panel
+    if (panels[panelId]) {
+        activePanel = panels[panelId];
+        activePanel.classList.add('active');
+    }
+    
+    // Stop floating animation
+    cube.style.animation = 'none';
+}
+
+function closePanel() {
+    if (!isMinimized) return;
+    
+    // Restore the cube
+    isMinimized = false;
+    scene.classList.remove('minimized');
+    cube.classList.remove('minimized');
+    
+    // Remove minimized class from all faces
+    const faces = document.querySelectorAll('.pixel-box-face');
+    faces.forEach(face => face.classList.remove('minimized'));
+    
+    // Hide the active panel
+    if (activePanel) {
+        activePanel.classList.remove('active');
+        activePanel = null;
+    }
+    
+    // Restart floating animation if enabled
+    if (isFloating) {
+        cube.style.animation = 'float 6s ease-in-out infinite';
+    }
+}
+
+function rotateCube(axis) {
+    if (axis === 'x') {
+        rotationX += 45;
+    } else {
+        rotationY += 45;
+    }
+    cube.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+}
+
+function toggleFloat() {
+    isFloating = !isFloating;
+    if (isFloating && !isMinimized) {
+        cube.style.animation = 'float 6s ease-in-out infinite';
+    } else {
+        cube.style.animation = 'none';
+    }
+}
+
+// Create floating particles
+const particlesContainer = document.getElementById('particles');
+function createParticles() {
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100 + 100}%`;
+        particle.style.width = `${Math.random() * 3 + 1}px`;
+        particle.style.height = particle.style.width;
+        particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// FPS Meter
+let lastTime = performance.now();
+let frameCount = 0;
+let currentFps = 0;
+
+function updateFps() {
+    const now = performance.now();
+    frameCount++;
+    
+    if (now >= lastTime + 1000) {
+        currentFps = Math.round((frameCount * 1000) / (now - lastTime));
+        document.getElementById('fps-meter').textContent = `FPS: ${currentFps}`;
+        frameCount = 0;
+        lastTime = now;
+    }
+    
+    requestAnimationFrame(updateFps);
+}
+
+// Clock functionality
+function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('time-display').textContent = `${hours}:${minutes}:${seconds}`;
+    
+    // Update clock every second
+    setTimeout(updateClock, 1000);
+}
+
+// Initialize Battery API
+function initBattery() {
+    if ('getBattery' in navigator) {
+        navigator.getBattery().then(function(battery) {
+            // Update battery info initially
+            updateBatteryInfo(battery);
+            
+            // Set up event listeners
+            battery.addEventListener('chargingchange', function() {
+                updateBatteryInfo(battery);
+            });
+            
+            battery.addEventListener('levelchange', function() {
+                updateBatteryInfo(battery);
+            });
+        });
+    } else {
+        // Fallback for browsers that don't support Battery API
+        document.getElementById('battery-percent').textContent = "N/A";
+        document.getElementById('battery-fill').style.width = "100%";
+        document.getElementById('battery').title = "Battery API not supported";
+    }
+}
+
+function updateBatteryInfo(battery) {
+    const level = battery.level * 100;
+    const percentElement = document.getElementById('battery-percent');
+    const fillElement = document.getElementById('battery-fill');
+    const chargingIcon = document.getElementById('charging-icon');
+    
+    // Update percentage
+    percentElement.textContent = `${Math.round(level)}%`;
+    
+    // Update fill level
+    fillElement.style.width = `${level}%`;
+    
+    // Update color based on level
+    if (level < 20) {
+        fillElement.style.color = 'var(--battery-low)';
+        percentElement.style.color = 'var(--battery-low)';
+    } else if (level < 50) {
+        fillElement.style.color = 'var(--battery-medium)';
+        percentElement.style.color = 'var(--battery-medium)';
+    } else {
+        fillElement.style.color = 'var(--battery-high)';
+        percentElement.style.color = 'var(--battery-high)';
+    }
+    
+    // Handle charging state
+    if (battery.charging) {
+        chargingIcon.style.display = 'block';
+        fillElement.style.animation = 'pulse 2s infinite';
+    } else {
+        chargingIcon.style.display = 'none';
+        fillElement.style.animation = 'none';
+    }
+}
+
+// Dice roller with FPS impact
+document.getElementById('roll-dice').addEventListener('click', function() {
+    const diceType = parseInt(document.getElementById('dice-type').value);
+    const diceCount = parseInt(document.getElementById('dice-count').value);
+    const container = document.getElementById('dice-container');
+    const totalDisplay = document.getElementById('dice-total');
+    
+    // Clear previous dice
+    container.innerHTML = '';
+    totalDisplay.classList.remove('show');
+    
+    let total = 0;
+    const diceResults = [];
+    
+    // Create and roll each die
+    for (let i = 0; i < diceCount; i++) {
+        setTimeout(() => {
+            const die = document.createElement('div');
+            die.className = 'die';
+            
+            // Set die type class
+            if (diceType === 100) {
+                die.classList.add('d10'); // Represent d100 as d10
+            } else {
+                die.classList.add(`d${diceType}`);
+            }
+            
+            // Random position for animation end point
+            const endX = Math.random() * (window.innerWidth - 100) + 50;
+            const endY = Math.random() * (window.innerHeight - 100) + 50;
+            
+            // Random final rotation
+            const endRotX = Math.floor(Math.random() * 4) * 90;
+            const endRotY = Math.floor(Math.random() * 4) * 90;
+            const endRotZ = Math.floor(Math.random() * 4) * 90;
+            
+            die.style.setProperty('--end-x', `${endX}px`);
+            die.style.setProperty('--end-y', `${endY}px`);
+            die.style.setProperty('--end-rot-x', `${endRotX}deg`);
+            die.style.setProperty('--end-rot-y', `${endRotY}deg`);
+            die.style.setProperty('--end-rot-z', `${endRotZ}deg`);
+            
+            // Generate random result
+            const result = diceType === 100 
+                ? Math.floor(Math.random() * 10) * 10
+                : Math.floor(Math.random() * diceType) + 1;
+            
+            // Create faces for the die with proper numbering
+            const faces = diceType === 4 ? 4 : 
+                         diceType === 6 ? 6 :
+                         diceType === 8 ? 8 :
+                         diceType === 10 || diceType === 100 ? 10 :
+                         diceType === 12 ? 12 : 20;
+            
+            for (let f = 1; f <= faces; f++) {
+                const face = document.createElement('div');
+                face.className = 'face';
+                face.textContent = diceType === 100 ? `${f}0` : f;
+                face.dataset.value = diceType === 100 ? f * 10 : f;
+                die.appendChild(face);
+            }
+            
+            // Set the final face to show (the result)
+            setTimeout(() => {
+                const faces = die.querySelectorAll('.face');
+                faces.forEach(face => face.style.display = 'none');
+                const resultFace = Array.from(faces).find(face => 
+                    parseInt(face.dataset.value) === result
+                );
+                if (resultFace) {
+                    resultFace.style.display = 'flex';
+                }
+            }, 2000);
+            
+            // Add to container and start animation
+            container.appendChild(die);
+            die.style.animation = 'roll 2s ease-out forwards';
+            
+            // Add to total
+            diceResults.push(result);
+            if (diceResults.length === diceCount) {
+                total = diceResults.reduce((sum, val) => sum + val, 0);
+                totalDisplay.textContent = total;
+                totalDisplay.classList.add('show');
+            }
+        }, i * 100); // Stagger the dice rolls
+    }
+});
+
+// Initialize everything when the page loads
+window.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    updateClock();
+    initBattery();
+    updateFps();
+    
+    // Set up keyboard controls
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isMinimized) {
+            closePanel();
+        }
+    });
+});
+</script>
+</body>
+</html>
