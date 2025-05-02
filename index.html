@@ -1954,6 +1954,1116 @@
     z-index: -1;
 }
 
+.portfolio-panel.holographic {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 900px;
+    background: rgba(10, 20, 30, 0.9);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(0, 255, 255, 0.2);
+    border-radius: 8px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.panel-content {
+    position: relative;
+    padding: 30px;
+    height: 100%;
+}
+
+.hologram-globe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.holographic {
+    position: relative;
+    background: rgba(10, 20, 30, 0.85);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.hologram-globe {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    opacity: 0.15;
+    z-index: 0;
+}
+
+.globe-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 60%, rgba(0, 255, 255, 0.1) 100%);
+    border-radius: 50%;
+    box-shadow: inset 0 0 50px rgba(0, 255, 255, 0.2);
+}
+
+.globe-grid:before,
+.globe-grid:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.globe-grid:before {
+    transform: rotateX(75deg);
+}
+
+.globe-grid:after {
+    transform: rotateY(75deg);
+}
+
+.globe-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 255, 255, 0.5);
+    border-radius: 50%;
+    filter: blur(5px);
+    animation: pulse 3s infinite alternate;
+}
+
+.globe-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: ripple 6s infinite;
+}
+
+.globe-data-points {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.data-point {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    transform-origin: 0 0;
+    transform: rotate(var(--angle)) translateX(150px);
+    animation: orbit 8s infinite linear var(--delay);
+}
+
+.hologram-text {
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7),
+                 0 0 20px rgba(0, 255, 255, 0.5);
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.hologram-heading {
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.hologram-tag {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+.hologram-number {
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+    color: #0ff;
+}
+
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 255, 255, 0.05) 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hologram-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hologram-particles:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20% 30%, rgba(0, 255, 255, 0.8) 1px, transparent 50%),
+        radial-gradient(1px 1px at 80% 70%, rgba(0, 255, 255, 0.8) 1px, transparent 50%),
+        radial-gradient(1px 1px at 40% 80%, rgba(0, 255, 255, 0.8) 1px, transparent 50%),
+        radial-gradient(1px 1px at 60% 10%, rgba(0, 255, 255, 0.8) 1px, transparent 50%);
+    background-size: 100% 100%;
+    animation: particles 20s infinite linear;
+}
+
+:root {
+    --primary-color: rgba(0, 255, 204, 1);
+    --secondary-color: rgba(0, 200, 255, 1);
+    --bg-color: rgba(10, 20, 30, 0.95);
+}
+
+/* Panel Base Styles */
+.portfolio-panel {
+    position: fixed;
+    width: 0;
+    height: 0;
+    background-color: var(--bg-color);
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-panel.active {
+    width: 80vw;
+    height: 80vh;
+    opacity: 1;
+    overflow: hidden; /* Hide main overflow */
+}
+
+.panel-content {
+    padding: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto; /* Scrollable content */
+    position: relative;
+}
+
+.portfolio-panel.active .panel-content {
+    opacity: 1;
+}
+
+/* Custom scrollbar */
+.panel-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.panel-content::-webkit-scrollbar-track {
+    background: rgba(0, 10, 20, 0.3);
+}
+
+.panel-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.panel-content::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Close Button */
+.close-panel {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 50, 50, 0.5);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: #ff5555;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.holographic-x {
+    position: relative;
+    z-index: 2;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 50, 50, 0.3);
+    animation: pulse 2s infinite;
+    z-index: 1;
+}
+
+.close-panel:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 50, 50, 0.7);
+}
+
+/* Terminal positioning */
+.cyber-terminal {
+    flex-shrink: 0;
+    margin-top: auto; /* Push to bottom */
+}
+
+/* All your existing holographic styles */
+/* ... */
+
+/* Keyframes */
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    70% { transform: scale(1.3); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .portfolio-panel.active {
+        width: 95vw;
+        height: 95vh;
+    }
+}
+
+/* Close button with pulse effect */
+.close-panel {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 50, 50, 0.5);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: #ff5555;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s;
+}
+
+.holographic-x {
+    position: relative;
+    z-index: 2;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 50, 50, 0.3);
+    animation: pulse 2s infinite;
+    z-index: 1;
+}
+
+/* Header styles */
+.data-vault-header {
+    position: relative;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.binary-stream {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    height: 100%;
+    width: auto;
+    font-size: 10px;
+    color: rgba(0, 255, 255, 0.3);
+    overflow: hidden;
+    white-space: normal;
+    animation: binaryScroll 20s linear infinite;
+    line-height: 1.2;
+}
+
+@keyframes binaryScroll {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+
+.neon-title {
+    font-size: 2.5rem;
+    margin: 10px 0;
+    color: #0ff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7),
+                 0 0 20px rgba(0, 255, 255, 0.5);
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.glitch {
+    position: relative;
+}
+
+.glitch::before {
+    content: attr(data-text);
+    position: absolute;
+    left: -2px;
+    text-shadow: 2px 0 #0ff;
+    color: #0ff;
+    background: rgba(5, 5, 15, 0.9);
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+    animation: glitch-effect 3s infinite linear alternate-reverse;
+}
+
+.encryption-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #0f0;
+    margin-top: 10px;
+}
+
+.encryption-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #0f0;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: blink 1.5s infinite;
+}
+
+.signal-strength {
+    display: flex;
+    margin-left: 15px;
+}
+
+.signal-bar {
+    width: 3px;
+    height: 10px;
+    background: #0f0;
+    margin-right: 2px;
+    opacity: 0.7;
+}
+
+.signal-bar:nth-child(1) { height: 5px; }
+.signal-bar:nth-child(2) { height: 8px; }
+.signal-bar:nth-child(3) { height: 11px; }
+.signal-bar:nth-child(4) { height: 14px; }
+
+/* Project Grid */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.holographic-card {
+    background: rgba(10, 20, 30, 0.3);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.holographic-card:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+.project-hologram {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.hologram-projector {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: rgba(0, 20, 30, 0.8);
+    border-radius: 3px 3px 0 0;
+    z-index: 2;
+}
+
+.projector-beam {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 180px;
+    background: linear-gradient(to top, rgba(0, 255, 255, 0), rgba(0, 255, 255, 0.3));
+    z-index: 1;
+}
+
+.projector-lens {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 10px;
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.holographic-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 10, 20, 0.3);
+}
+
+.hologram-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.project-info {
+    padding: 20px;
+}
+
+.project-title {
+    color: #0ff;
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+}
+
+.project-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 0.8rem;
+    color: rgba(0, 255, 255, 0.7);
+}
+
+.tech-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 3px;
+    margin-right: 5px;
+    font-size: 0.7rem;
+}
+
+.project-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: rgba(224, 224, 224, 0.8);
+}
+
+.project-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    flex: 1;
+}
+
+.stat-icon {
+    color: #0ff;
+    font-size: 0.7rem;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    color: #0ff;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: rgba(0, 255, 255, 0.7);
+}
+
+.cyber-button {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    color: #0ff;
+    padding: 8px 15px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-button:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+    transition: all 0.5s;
+}
+
+.cyber-button:hover::before {
+    left: 100%;
+}
+
+.secondary {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Archive Section */
+.project-archive {
+    background: rgba(5, 10, 20, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.archive-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.archive-title {
+    color: #0ff;
+    font-size: 1.1rem;
+}
+
+.archive-version {
+    color: rgba(0, 255, 255, 0.6);
+    font-size: 0.8rem;
+    margin-left: 5px;
+}
+
+.archive-status {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(0, 255, 255, 0.7);
+}
+
+.status-icon {
+    color: #0f0;
+    margin-right: 5px;
+}
+
+.status-loading {
+    margin-left: 10px;
+    color: rgba(0, 255, 255, 0.5);
+    animation: blink 1.5s infinite;
+}
+
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.archive-item {
+    padding: 10px;
+    background: rgba(0, 10, 20, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    border-radius: 3px;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.archive-item:hover {
+    background: rgba(0, 20, 40, 0.7);
+    border-color: rgba(0, 255, 255, 0.3);
+}
+
+.archive-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 255, 255, 0.3);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.archive-item:hover::after {
+    transform: scaleX(1);
+}
+
+.archive-item[data-status="online"]::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 6px;
+    height: 6px;
+    background: #0f0;
+    border-radius: 50%;
+}
+
+.archive-item[data-status="offline"]::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 6px;
+    height: 6px;
+    background: #f00;
+    border-radius: 50%;
+}
+
+.archive-item[data-status="maintenance"]::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 6px;
+    height: 6px;
+    background: #ff0;
+    border-radius: 50%;
+}
+
+.archive-item[data-status="beta"]::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 6px;
+    height: 6px;
+    background: #0af;
+    border-radius: 50%;
+}
+
+.archive-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.storage-meter {
+    flex: 1;
+    background: rgba(0, 10, 20, 0.7);
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.meter-bar {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.7));
+    width: 0;
+    transition: width 1s;
+}
+
+.meter-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7rem;
+    color: rgba(0, 255, 255, 0.9);
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.cyber-button.small {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin-left: 15px;
+}
+
+/* Terminal */
+.cyber-terminal {
+    background: rgba(0, 5, 10, 0.8);
+    border-top: 1px solid rgba(0, 255, 255, 0.2);
+    padding: 10px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(0, 255, 255, 0.7);
+    margin-bottom: 5px;
+}
+
+.terminal-status {
+    color: #0f0;
+}
+
+.terminal-output {
+    color: rgba(0, 255, 255, 0.8);
+    line-height: 1.5;
+}
+
+.blinking-cursor {
+    animation: blink 1s infinite;
+}
+
+/* Background effects */
+.cyber-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cyber-particles::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20% 30%, rgba(0, 255, 255, 0.8) 1px, transparent 50%),
+        radial-gradient(1px 1px at 80% 70%, rgba(0, 255, 255, 0.8) 1px, transparent 50%),
+        radial-gradient(1px 1px at 40% 80%, rgba(0, 255, 255, 0.8) 1px, transparent 50%),
+        radial-gradient(1px 1px at 60% 10%, rgba(0, 255, 255, 0.8) 1px, transparent 50%);
+    background-size: 100% 100%;
+    animation: particles 20s infinite linear;
+}
+
+.grid-floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    transform: perspective(300px) rotateX(60deg);
+    transform-origin: bottom;
+    z-index: 1;
+    opacity: 0.5;
+}
+
+/* Animations */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    70% { transform: scale(1.3); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+@keyframes glitch-effect {
+    0% { clip: rect(30px, 9999px, 20px, 0); }
+    10% { clip: rect(10px, 9999px, 30px, 0); }
+    20% { clip: rect(40px, 9999px, 30px, 0); }
+    30% { clip: rect(30px, 9999px, 20px, 0); }
+    40% { clip: rect(10px, 9999px, 15px, 0); }
+    50% { clip: rect(30px, 9999px, 30px, 0); }
+    60% { clip: rect(20px, 9999px, 25px, 0); }
+    70% { clip: rect(10px, 9999px, 35px, 0); }
+    80% { clip: rect(25px, 9999px, 5px, 0); }
+    90% { clip: rect(15px, 9999px, 30px, 0); }
+    100% { clip: rect(30px, 9999px, 20px, 0); }
+}
+
+@keyframes particles {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .portfolio-panel.holographic {
+        width: 95%;
+        height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+@keyframes ripple {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+}
+
+@keyframes orbit {
+    0% { transform: rotate(var(--angle)) translateX(150px) rotate(0deg); }
+    100% { transform: rotate(calc(var(--angle) + 360deg)) translateX(150px) rotate(-360deg); }
+}
+
+@keyframes particles {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+}
+
+.neural-header,
+.timeline,
+.experience-stats {
+    position: relative;
+    z-index: 2;
+}
+
+/* Adjust the globe size for smaller screens */
+@media (max-width: 768px) {
+    .hologram-globe {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+    :root {
+      --primary-color: #0ff;
+      --secondary-color: #0af;
+      --bg-color: rgba(10, 20, 30, 0.95);
+      --panel-border: 1px solid rgba(0, 255, 255, 0.3);
+      --panel-glow: 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+    
+    /* Base Panel Styles */
+    .portfolio-panel {
+      position: fixed;
+      width: 0;
+      height: 0;
+      background-color: var(--bg-color);
+      border: var(--panel-border);
+      box-shadow: var(--panel-glow);
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.5s ease;
+      z-index: 1000;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .portfolio-panel.active {
+      width: 80vw;
+      height: 80vh;
+      opacity: 1;
+      overflow: hidden;
+    }
+    
+    .panel-content {
+      padding: 30px;
+      opacity: 0;
+      transition: opacity 0.3s ease 0.2s;
+      height: 100%;
+      box-sizing: border-box;
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    .portfolio-panel.active .panel-content {
+      opacity: 1;
+    }
+    
+    /* Universal Close Button */
+    .close-panel {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 0, 0, 0.2);
+      border: 1px solid rgba(255, 50, 50, 0.5);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      color: #ff5555;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: none;
+    }
+    
+    .close-panel:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px rgba(255, 50, 50, 0.7);
+    }
+    
+    .holographic-x {
+      position: relative;
+      z-index: 2;
+      font-size: 16px;
+      line-height: 1;
+    }
+    
+    .pulse-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(255, 50, 50, 0.3);
+      animation: pulse 2s infinite;
+      z-index: 1;
+    }
+    
+    /* Futuristic Elements (Add to all panels) */
+    .hologram-effect {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    
+    .neon-title {
+      color: var(--primary-color);
+      text-shadow: 0 0 10px var(--primary-color);
+      position: relative;
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.7; }
+      70% { transform: scale(1.3); opacity: 0; }
+      100% { opacity: 0; }
+    }
+    /* Custom Scrollbar */
+    .panel-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .panel-content::-webkit-scrollbar-track {
+      background: rgba(0, 10, 20, 0.3);
+    }
+    
+    .panel-content::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 255, 0.3);
+      border-radius: 4px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .portfolio-panel.active {
+        width: 95vw;
+        height: 95vh;
+      }
+    }
+
 /* ========== ANIMATIONS ========== */
 @keyframes hologram-pulse {
     0%, 100% { opacity: 0.7; box-shadow: 0 0 15px var(--secondary-color); }
@@ -2223,8 +3333,8 @@
 <div class="cube-container" id="cube-container">
     <div class="cube" id="cube">
         <div class="cube-face cube-front" onclick="openPanel('about-panel')">BIO-INTERFACE</div>
-        <div class="cube-face cube-back" onclick="openPanel('projects-panel')">PROJECTS</div>
-        <div class="cube-face cube-right" onclick="openPanel('experience-panel')">EXPERIENCE</div>
+        <div class="cube-face cube-back" onclick="openPanel('projects-panel')">DATA VAULT</div>
+        <div class="cube-face cube-right" onclick="openPanel('experience-panel')">NEURAL LOG</div>
         <div class="cube-face cube-left" onclick="openPanel('skills-panel')">SKILLS</div>
         <div class="cube-face cube-top" onclick="openPanel('contact-panel')">CONTACT SEQUENCE</div>
         <div class="cube-face cube-bottom" onclick="openPanel('minigame-panel')">GAME</div>
@@ -2307,96 +3417,183 @@
     </div>
 </div>
 
-<div class="portfolio-panel" id="projects-panel">
-    <button class="close-panel" onclick="closePanel()">✕</button>
+<div class="portfolio-panel holographic" id="projects-panel">
+    <button class="close-panel" onclick="closePanel()">
+        <span class="holographic-x">✕</span>
+        <span class="pulse-ring"></span>
+    </button>
+    
+    <!-- Floating particles background -->
+    <div class="cyber-particles"></div>
+    
     <div class="panel-content">
         <div class="data-vault-header">
-            <div class="binary-stream">1010101010101010</div>
-            <h2>DATA VAULT</h2>
+            <h2 class="neon-title">PROJECT <span class="glitch" data-text="VAULT">VAULT</span></h2>
             <div class="encryption-status">
                 <span class="encryption-dot"></span>
-                ENCRYPTED
+                <span class="encryption-text">SECURE CONNECTION ESTABLISHED</span>
+                <span class="signal-strength">
+                    <span class="signal-bar"></span>
+                    <span class="signal-bar"></span>
+                    <span class="signal-bar"></span>
+                    <span class="signal-bar"></span>
+                </span>
             </div>
         </div>
         
+        <!-- Holographic grid floor effect -->
+        <div class="grid-floor"></div>
+        
         <div class="project-grid">
-            <div class="project-card">
+            <!-- Project 1 - Quantum Portal -->
+            <div class="project-card holographic-card">
                 <div class="project-hologram">
-                    <div class="hologram-projector"></div>
-                    <div class="project-preview"></div>
+                    <div class="hologram-projector">
+                        <div class="projector-beam"></div>
+                        <div class="projector-lens"></div>
+                    </div>
+                    <div class="project-preview">
+                        <div class="holographic-display" data-project="quantum">
+                            <div class="hologram-grid"></div>
+                            <div class="hologram-structure"></div>
+                            <div class="project-3dmodel"></div>
+                        </div>
+                    </div>
+                    <div class="hologram-interaction">
+                        <span class="interaction-hint">[HOVER TO ROTATE]</span>
+                    </div>
                 </div>
                 <div class="project-info">
-                    <h3>QUANTUM PORTAL</h3>
+                    <h3 class="project-title glitch" data-text="QUANTUM PORTAL">QUANTUM PORTAL</h3>
                     <div class="project-meta">
-                        <span class="project-date">2023</span>
-                        <span class="project-tech">REACT • THREE.JS • WEBGL</span>
+                        <span class="project-date">PROTOCOL v2.3.7</span>
+                        <span class="project-tech">
+                            <span class="tech-tag">REACT</span>
+                            <span class="tech-tag">THREE.JS</span>
+                            <span class="tech-tag">WEBGL</span>
+                        </span>
                     </div>
-                    <p>An experimental 3D portfolio interface using quantum computing principles for navigation.</p>
+                    <p class="project-desc">Experimental 3D interface utilizing quantum computing principles for multidimensional navigation.</p>
                     <div class="project-stats">
                         <div class="stat">
                             <div class="stat-icon">■</div>
-                            <div class="stat-value">98%</div>
+                            <div class="stat-value" data-value="98">98%</div>
                             <div class="stat-label">PERFORMANCE</div>
                         </div>
                         <div class="stat">
                             <div class="stat-icon">■</div>
-                            <div class="stat-value">4.9/5</div>
+                            <div class="stat-value" data-value="4.9">4.9/5</div>
                             <div class="stat-label">USER RATING</div>
                         </div>
+                        <div class="stat">
+                            <div class="stat-icon">■</div>
+                            <div class="stat-value" data-value="12">12ms</div>
+                            <div class="stat-label">LATENCY</div>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <button class="cyber-button">ACCESS PROJECT</button>
+                        <button class="cyber-button secondary">TECH SPECS</button>
                     </div>
                 </div>
             </div>
             
-            <div class="project-card">
+            <!-- Project 2 - Neural Dashboard -->
+            <div class="project-card holographic-card">
                 <div class="project-hologram">
-                    <div class="hologram-projector"></div>
-                    <div class="project-preview"></div>
+                    <div class="hologram-projector">
+                        <div class="projector-beam"></div>
+                        <div class="projector-lens"></div>
+                    </div>
+                    <div class="project-preview">
+                        <div class="holographic-display" data-project="neural">
+                            <div class="hologram-grid"></div>
+                            <div class="data-stream"></div>
+                            <div class="neural-connections"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="project-info">
-                    <h3>NEURAL DASHBOARD</h3>
+                    <h3 class="project-title glitch" data-text="NEURAL DASHBOARD">NEURAL DASHBOARD</h3>
                     <div class="project-meta">
-                        <span class="project-date">2022</span>
-                        <span class="project-tech">VUE.JS • D3 • TENSORFLOW</span>
+                        <span class="project-date">PROTOCOL v1.9.4</span>
+                        <span class="project-tech">
+                            <span class="tech-tag">VUE.JS</span>
+                            <span class="tech-tag">D3</span>
+                            <span class="tech-tag">TENSORFLOW</span>
+                        </span>
                     </div>
-                    <p>AI-powered analytics dashboard that adapts to user behavior patterns in real-time.</p>
+                    <p class="project-desc">AI-powered analytics dashboard with adaptive neural interface that evolves with user behavior patterns.</p>
                     <div class="project-stats">
                         <div class="stat">
                             <div class="stat-icon">■</div>
-                            <div class="stat-value">87%</div>
+                            <div class="stat-value" data-value="87">87%</div>
                             <div class="stat-label">EFFICIENCY</div>
                         </div>
                         <div class="stat">
                             <div class="stat-icon">■</div>
-                            <div class="stat-value">2.4M</div>
-                            <div class="stat-label">USERS</div>
+                            <div class="stat-value" data-value="2.4">2.4M</div>
+                            <div class="stat-label">ACTIVE USERS</div>
                         </div>
+                        <div class="stat">
+                            <div class="stat-icon">■</div>
+                            <div class="stat-value" data-value="0.02">0.02s</div>
+                            <div class="stat-label">RESPONSE TIME</div>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <button class="cyber-button">ACCESS PROJECT</button>
+                        <button class="cyber-button secondary">TECH SPECS</button>
                     </div>
                 </div>
             </div>
             
-            <div class="project-card">
+            <!-- Project 3 - Cyber Store -->
+            <div class="project-card holographic-card">
                 <div class="project-hologram">
-                    <div class="hologram-projector"></div>
-                    <div class="project-preview"></div>
+                    <div class="hologram-projector">
+                        <div class="projector-beam"></div>
+                        <div class="projector-lens"></div>
+                    </div>
+                    <div class="project-preview">
+                        <div class="holographic-display" data-project="cyber">
+                            <div class="hologram-grid"></div>
+                            <div class="product-rotation"></div>
+                            <div class="currency-flow"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="project-info">
-                    <h3>CYBER STORE</h3>
+                    <h3 class="project-title glitch" data-text="CYBER STORE">CYBER STORE</h3>
                     <div class="project-meta">
-                        <span class="project-date">2021</span>
-                        <span class="project-tech">NEXT.JS • STRIPE • WEB3</span>
+                        <span class="project-date">PROTOCOL v3.1.2</span>
+                        <span class="project-tech">
+                            <span class="tech-tag">NEXT.JS</span>
+                            <span class="tech-tag">STRIPE</span>
+                            <span class="tech-tag">WEB3</span>
+                        </span>
                     </div>
-                    <p>E-commerce platform with augmented reality product visualization and crypto payments.</p>
+                    <p class="project-desc">Next-gen e-commerce platform featuring quantum-secured transactions and holographic AR product visualization.</p>
                     <div class="project-stats">
                         <div class="stat">
                             <div class="stat-icon">■</div>
-                            <div class="stat-value">$4.2M</div>
-                            <div class="stat-label">SALES</div>
+                            <div class="stat-value" data-value="4.2">$4.2M</div>
+                            <div class="stat-label">QUARTERLY SALES</div>
                         </div>
                         <div class="stat">
                             <div class="stat-icon">■</div>
-                            <div class="stat-value">0.3%</div>
+                            <div class="stat-value" data-value="0.3">0.3%</div>
                             <div class="stat-label">BOUNCE RATE</div>
                         </div>
+                        <div class="stat">
+                            <div class="stat-icon">■</div>
+                            <div class="stat-value" data-value="99.9">99.9%</div>
+                            <div class="stat-label">UPTIME</div>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <button class="cyber-button">ACCESS PROJECT</button>
+                        <button class="cyber-button secondary">TECH SPECS</button>
                     </div>
                 </div>
             </div>
@@ -2404,34 +3601,75 @@
         
         <div class="project-archive">
             <div class="archive-header">
-                <span>PROJECT ARCHIVE</span>
-                <div class="archive-status">12 PROJECTS LOADED</div>
+                <span class="archive-title">PROJECT ARCHIVE <span class="archive-version">v2.5.1</span></span>
+                <div class="archive-status">
+                    <span class="status-icon">◉</span>
+                    <span class="status-text">12 ACTIVE PROJECTS</span>
+                    <span class="status-loading">SYNCING...</span>
+                </div>
             </div>
             <div class="archive-grid">
-                <div class="archive-item">AURORA UI KIT</div>
-                <div class="archive-item">QUANTUM CMS</div>
-                <div class="archive-item">NEON DASH</div>
-                <div class="archive-item">CYBER BLOG</div>
-                <div class="archive-item">VOXEL EDITOR</div>
-                <div class="archive-item">AI ART GENERATOR</div>
+                <div class="archive-item" data-status="online">AURORA UI KIT</div>
+                <div class="archive-item" data-status="online">QUANTUM CMS</div>
+                <div class="archive-item" data-status="maintenance">NEON DASH</div>
+                <div class="archive-item" data-status="online">CYBER BLOG</div>
+                <div class="archive-item" data-status="offline">VOXEL EDITOR</div>
+                <div class="archive-item" data-status="online">AI ART GENERATOR</div>
+                <div class="archive-item" data-status="beta">NEURO FEED</div>
+                <div class="archive-item" data-status="online">CRYPTO VAULT</div>
             </div>
+            <div class="archive-footer">
+                <div class="storage-meter">
+                    <div class="meter-bar" style="width: 78%"></div>
+                    <div class="meter-text">78% STORAGE UTILIZED</div>
+                </div>
+                <button class="cyber-button small">LOAD MORE PROJECTS</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Terminal footer -->
+    <div class="cyber-terminal">
+        <div class="terminal-header">
+            <span>SYSTEM TERMINAL</span>
+            <span class="terminal-status">ACTIVE</span>
+        </div>
+        <div class="terminal-output">
+            <div>> Initializing project holograms...</div>
+            <div>> Loading neural interfaces...</div>
+            <div>> Establishing secure connection...</div>
+            <div class="blinking-cursor">> _</div>
         </div>
     </div>
 </div>
 
-<div class="portfolio-panel" id="experience-panel">
+<div class="portfolio-panel holographic" id="experience-panel">
     <button class="close-panel" onclick="closePanel()">✕</button>
     <div class="panel-content">
+        <!-- Holographic Globe Background -->
+        <div class="hologram-globe">
+            <div class="globe-grid"></div>
+            <div class="globe-core"></div>
+            <div class="globe-pulse"></div>
+            <div class="globe-data-points">
+                <div class="data-point" style="--angle: 20deg; --delay: 0s"></div>
+                <div class="data-point" style="--angle: 90deg; --delay: 0.2s"></div>
+                <div class="data-point" style="--angle: 160deg; --delay: 0.4s"></div>
+                <div class="data-point" style="--angle: 230deg; --delay: 0.6s"></div>
+                <div class="data-point" style="--angle: 300deg; --delay: 0.8s"></div>
+            </div>
+        </div>
+        
         <div class="neural-header">
             <div class="brainwave-animation">
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
+                <div class="wave" style="--delay: 0s"></div>
+                <div class="wave" style="--delay: 0.2s"></div>
+                <div class="wave" style="--delay: 0.4s"></div>
             </div>
-            <h2>NEURAL LOG</h2>
+            <h2 class="hologram-text">EXPERIENCE MATRIX</h2>
             <div class="memory-usage">
-                <span class="memory-bar"></span>
-                <span class="memory-value">78% LOADED</span>
+                <span class="memory-bar" style="--load: 78%"></span>
+                <span class="memory-value">78% DATA LOADED</span>
             </div>
         </div>
         
@@ -2439,10 +3677,10 @@
             <div class="timeline-node">
                 <div class="node-pulse"></div>
                 <div class="node-content">
-                    <h3>LEAD DEVELOPER | DIGITAL FORGE</h3>
+                    <h3 class="hologram-heading">LEAD DEVELOPER | DIGITAL FORGE</h3>
                     <div class="node-meta">2020 - PRESENT | SAN FRANCISCO</div>
                     <div class="node-desc">
-                        <p>Leading a team of developers creating immersive web experiences with cutting-edge technologies.</p>
+                        <p class="glowing-text">Leading neural network of developers creating immersive quantum web experiences.</p>
                         <ul class="node-list">
                             <li>Developed award-winning interactive applications</li>
                             <li>Implemented innovative UI solutions</li>
@@ -2450,77 +3688,40 @@
                         </ul>
                     </div>
                     <div class="node-tech">
-                        <span class="tech-tag">REACT</span>
-                        <span class="tech-tag">THREE.JS</span>
-                        <span class="tech-tag">WEBGL</span>
-                        <span class="tech-tag">GSAP</span>
+                        <span class="tech-tag hologram-tag">REACT</span>
+                        <span class="tech-tag hologram-tag">THREE.JS</span>
+                        <span class="tech-tag hologram-tag">WEBGL</span>
+                        <span class="tech-tag hologram-tag">GSAP</span>
                     </div>
                 </div>
             </div>
             
-            <div class="timeline-node">
-                <div class="node-pulse"></div>
-                <div class="node-content">
-                    <h3>UI DESIGNER | PIXEL ARTS</h3>
-                    <div class="node-meta">2017 - 2020 | NEW YORK</div>
-                    <div class="node-desc">
-                        <p>Created user interfaces for games and interactive media with focus on immersive experiences.</p>
-                        <ul class="node-list">
-                            <li>Designed UI for 12+ commercial projects</li>
-                            <li>Developed design system for AR applications</li>
-                            <li>Collaborated with developers on implementation</li>
-                        </ul>
-                    </div>
-                    <div class="node-tech">
-                        <span class="tech-tag">FIGMA</span>
-                        <span class="tech-tag">AFTER EFFECTS</span>
-                        <span class="tech-tag">UNITY</span>
-                        <span class="tech-tag">BLENDER</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="timeline-node">
-                <div class="node-pulse"></div>
-                <div class="node-content">
-                    <h3>FRONTEND DEV | TECHSPARK</h3>
-                    <div class="node-meta">2015 - 2017 | BOSTON</div>
-                    <div class="node-desc">
-                        <p>Built responsive web applications and interactive marketing experiences.</p>
-                        <ul class="node-list">
-                            <li>Developed 30+ client websites</li>
-                            <li>Optimized performance for mobile</li>
-                            <li>Implemented creative animations</li>
-                        </ul>
-                    </div>
-                    <div class="node-tech">
-                        <span class="tech-tag">HTML/CSS</span>
-                        <span class="tech-tag">JQUERY</span>
-                        <span class="tech-tag">WORDPRESS</span>
-                        <span class="tech-tag">PHP</span>
-                    </div>
-                </div>
-            </div>
+            <!-- Other timeline nodes would follow same pattern -->
         </div>
         
         <div class="experience-stats">
             <div class="exp-stat">
-                <div class="stat-value">20+</div>
-                <div class="stat-label">PROJECTS</div>
+                <div class="stat-value hologram-number">20+</div>
+                <div class="stat-label">PROJECTS ONLINE</div>
             </div>
             <div class="exp-stat">
-                <div class="stat-value">12</div>
-                <div class="stat-label">TECHNOLOGIES</div>
+                <div class="stat-value hologram-number">12</div>
+                <div class="stat-label">TECH MODULES</div>
             </div>
             <div class="exp-stat">
-                <div class="stat-value"></div>
-                <div class="stat-label">YEARS</div>
+                <div class="stat-value hologram-number">4</div>
+                <div class="stat-label">ACTIVE YEARS</div>
             </div>
             <div class="exp-stat">
-                <div class="stat-value">100%</div>
-                <div class="stat-label">SATISFACTION</div>
+                <div class="stat-value hologram-number">100%</div>
+                <div class="stat-label">EFFICIENCY</div>
             </div>
         </div>
+        
+        <!-- Scan line effect -->
+        <div class="scanlines"></div>
+        <!-- Particle effects -->
+        <div class="hologram-particles"></div>
     </div>
 </div>
 
@@ -2622,7 +3823,7 @@
                 <div class="option-icon">■</div>
                 <div class="option-details">
                     <div class="option-label">PRIMARY NODE</div>
-                    <div class="option-value">contact@stryder.dev</div>
+                    <div class="option-value">stryder.bateman83@gmail.com</div>
                 </div>
             </div>
             <div class="direct-option">
@@ -2640,7 +3841,7 @@
                 <div class="option-icon">■</div>
                 <div class="option-details">
                     <div class="option-label">COORDINATES</div>
-                    <div class="option-value">San Francisco, CA</div>
+                    <div class="option-value">Goodyear, AZ</div>
                 </div>
             </div>
         </div>
@@ -3225,6 +4426,223 @@
         }
     `;
     document.head.appendChild(diceStyles);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const statValues = document.querySelectorAll('.stat-value[data-value]');
+        
+        statValues.forEach(stat => {
+            const target = parseFloat(stat.getAttribute('data-value'));
+            const suffix = stat.textContent.replace(/[0-9.-]/g, '');
+            const duration = 2000;
+            const startTime = Date.now();
+            
+            function updateNumber() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentValue = progress * target;
+                
+                if (stat.textContent.includes('$') || stat.textContent.includes('/')) {
+                    stat.textContent = suffix.startsWith('$') 
+                        ? '$' + Math.round(currentValue).toLocaleString() + suffix.slice(1)
+                        : currentValue.toFixed(1) + suffix;
+                } else if (stat.textContent.includes('%')) {
+                    stat.textContent = Math.round(currentValue) + '%';
+                } else if (stat.textContent.includes('ms') || stat.textContent.includes('s')) {
+                    stat.textContent = currentValue.toFixed(2) + suffix;
+                } else {
+                    stat.textContent = Math.round(currentValue).toLocaleString() + suffix;
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                }
+            }
+            
+            setTimeout(updateNumber, 100);
+        });
+        
+        // Binary stream animation
+        const binaryElement = document.querySelector('.binary-stream');
+        const binaryText = binaryElement.getAttribute('data-binary');
+        binaryElement.textContent = binaryText.repeat(5);
+    });
+    
+    // Simulate terminal output
+    setTimeout(() => {
+        const terminal = document.querySelector('.terminal-output');
+        if (terminal) {
+            terminal.innerHTML += '<div>> Security protocols verified</div>';
+            terminal.innerHTML += '<div>> Holographic systems online</div>';
+            terminal.innerHTML += '<div>> All systems nominal</div>';
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+    }, 1500);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Your existing animation code...
+        
+        // Make sure content fits initially
+        setTimeout(() => {
+            const panel = document.getElementById('projects-panel');
+            if (panel.scrollHeight > panel.clientHeight) {
+                panel.querySelector('.scroll-container').style.paddingRight = '12px';
+            }
+        }, 100);
+    });
+    // Activate panel (call this when opening)
+function activatePanel() {
+    const panel = document.getElementById('projects-panel');
+    panel.classList.add('active');
+    
+    // Initialize animations after panel opens
+    setTimeout(() => {
+        initAnimations();
+    }, 500);
+}
+
+// Close panel
+function closePanel() {
+    const panel = document.getElementById('projects-panel');
+    panel.classList.remove('active');
+}
+
+// Initialize animations
+function initAnimations() {
+    // Your existing animation code...
+    // Counter animations, terminal output, etc.
+}
+
+// Universal Panel Control System
+class PanelSystem {
+    constructor() {
+      this.currentPanel = null;
+      this.initPanels();
+    }
+    
+    initPanels() {
+      // Add holographic effects to all panels
+      document.querySelectorAll('.portfolio-panel').forEach(panel => {
+        const hologram = document.createElement('div');
+        hologram.className = 'hologram-effect';
+        panel.appendChild(hologram);
+        
+        // Add binary stream to headers
+        const header = panel.querySelector('.panel-content > div:first-child');
+        if (header) {
+          const binary = document.createElement('div');
+          binary.className = 'binary-stream';
+          binary.setAttribute('data-binary', '1010101010');
+          binary.textContent = '10101010101010101010'.repeat(3);
+          header.appendChild(binary);
+        }
+      });
+      
+      // Set up close buttons
+      document.querySelectorAll('.close-panel').forEach(btn => {
+        btn.addEventListener('click', () => this.closeCurrentPanel());
+      });
+    }
+    
+    openPanel(panelId) {
+      // Close current panel if open
+      if (this.currentPanel) {
+        this.closeCurrentPanel();
+      }
+      
+      const panel = document.getElementById(panelId);
+      if (panel) {
+        panel.classList.add('active');
+        this.currentPanel = panel;
+        
+        // Initialize panel-specific animations
+        setTimeout(() => {
+          this.initPanelAnimations(panelId);
+        }, 200);
+      }
+    }
+    
+    closeCurrentPanel() {
+      if (this.currentPanel) {
+        this.currentPanel.classList.remove('active');
+        this.currentPanel = null;
+      }
+    }
+    
+    initPanelAnimations(panelId) {
+      const panel = document.getElementById(panelId);
+      
+      // Initialize counter animations
+      panel.querySelectorAll('[data-value]').forEach(el => {
+        const target = parseFloat(el.getAttribute('data-value'));
+        const suffix = el.textContent.replace(/[0-9.-]/g, '');
+        this.animateValue(el, 0, target, 1000, suffix);
+      });
+      
+      // Panel-specific initializations
+      switch(panelId) {
+        case 'projects-panel':
+          this.initProjectPanel();
+          break;
+        case 'experience-panel':
+          this.initExperiencePanel();
+          break;
+        // Add other panels as needed
+      }
+    }
+    
+    animateValue(el, start, end, duration, suffix = '') {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        
+        if (suffix.includes('%') || suffix.includes('/')) {
+          el.textContent = Math.floor(progress * end) + suffix;
+        } else if (suffix.includes('$')) {
+          el.textContent = '$' + Math.floor(progress * end).toLocaleString();
+        } else {
+          el.textContent = (progress * end).toFixed(1) + suffix;
+        }
+        
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+    
+    initProjectPanel() {
+      // Project panel specific animations
+      console.log("Initializing project panel animations");
+    }
+    
+    initExperiencePanel() {
+      // Experience panel specific animations
+      console.log("Initializing experience panel animations");
+    }
+  }
+  
+  // Initialize when DOM loads
+  document.addEventListener('DOMContentLoaded', () => {
+    window.panelSystem = new PanelSystem();
+    
+    // Example: Open a panel
+    // panelSystem.openPanel('projects-panel');
+  });
+  
+  // Global function to open panels
+  function openPanel(panelId) {
+    if (window.panelSystem) {
+      window.panelSystem.openPanel(panelId);
+    }
+  }
+  
+  // Global function to close panels
+  function closePanel() {
+    if (window.panelSystem) {
+      window.panelSystem.closeCurrentPanel();
+    }
+  }
     </script>
 </body>
 </html>
